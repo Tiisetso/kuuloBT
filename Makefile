@@ -1,11 +1,11 @@
-# kuuloBT - Bluetooth audio connector for Linux
-# No sudo required
-
 NAME     = kuulobt
 CC       = cc
+
 CFLAGS   = -Wall -Wextra -Werror -g
 INCDIR   = include
+
 OBJDIR   = obj
+
 DBUS_CFLAGS  = $(shell pkg-config --cflags dbus-1)
 DBUS_LIBS    = $(shell pkg-config --libs dbus-1)
 PULSE_CFLAGS = $(shell pkg-config --cflags libpulse)
