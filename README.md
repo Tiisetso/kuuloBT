@@ -1,8 +1,10 @@
-# 🎧 kuuloBT
+# kuuloBT
 
-A C program to connect Bluetooth audio devices to Linux without sudo.
+A C program to connect Bluetooth audio devices to Linux based iMacs at Hive. 
 
 Uses the D-Bus API (BlueZ) for Bluetooth management and PulseAudio's C API for audio routing.
+
+This software was almost entirely programmed using LLM agents.
 
 ## Build
 
@@ -10,20 +12,19 @@ Uses the D-Bus API (BlueZ) for Bluetooth management and PulseAudio's C API for a
 make
 ```
 
-**Dependencies** (must be installed): `libdbus-1-dev`, `libpulse-dev`
-
 ## Usage
 
 ```bash
-./kuulobt help          # Show all commands
-./kuulobt scan          # Scan for devices, select with arrow keys
-./kuulobt connect       # Interactive device selector
-./kuulobt connect -m XX:XX:XX:XX:XX:XX   # Connect by MAC address
-./kuulobt disconnect    # Disconnect current device
-./kuulobt status        # Show current connection & audio status
-./kuulobt diagnose      # Full system diagnostics
-./kuulobt fix           # Attempt automatic audio fixes
-./kuulobt reset         # Remove pairing and start fresh
+./kuulobt
+```
+If you wish to install the program for regular use. Copy or the binary to your .local/bin
+```bash
+cp kuulobt ~/.local/bin/
+chmod +x ~/.local/bin/kuulobt
+```
+To run the application
+```bash
+kuulobt
 ```
 
 ## Interactive Device Selector
