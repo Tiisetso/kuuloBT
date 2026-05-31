@@ -1,11 +1,9 @@
 /* ************************************************************************** */
 /*                          utils.c                                           */
-/*   Utility functions for blueconnect                                        */
+/*   Utility functions for kuuloBT                                            */
 /* ************************************************************************** */
 
-#define _GNU_SOURCE
-#include <strings.h>
-#include "blueconnect.h"
+#include "kuulobt.h"
 
 int	run_cmd(const char *cmd, char *out, int out_len)
 {
@@ -39,49 +37,29 @@ int	run_cmd_silent(const char *cmd)
 	return (run_cmd(cmd, buf, sizeof(buf)));
 }
 
-void	print_banner(void)
-{
-	printf("\n");
-	printf(C_CYN C_BOLD "  ╔══════════════════════════════════════╗\n");
-	printf("  ║" C_WHT "       🎧  blueconnect  v1.0          " C_CYN "║\n");
-	printf("  ║" C_DIM C_WHT "    AirPods Pro → Linux connector     " C_CYN C_BOLD "║\n");
-	printf("  ╚══════════════════════════════════════╝" C_RST "\n\n");
-}
-
 void	print_help(void)
 {
-	print_banner();
-	printf(C_BOLD "USAGE:" C_RST "\n");
-	printf("  blueconnect [command] [options]\n\n");
-	printf(C_BOLD "COMMANDS:" C_RST "\n");
-	printf("  " C_CYN "scan" C_RST "          Scan for Bluetooth devices\n");
-	printf("  " C_CYN "connect" C_RST "       Connect to AirPods (auto-detect or specify MAC)\n");
-	printf("  " C_CYN "disconnect" C_RST "    Disconnect current AirPods\n");
+	printf(C_CYN C_BOLD "kuuloBT" C_RST
+		C_DIM " — Bluetooth audio for Linux\n" C_RST "\n");
+	printf(C_BOLD "Usage:" C_RST " kuulobt <command> [options]\n\n");
+	printf(C_BOLD "Commands:\n" C_RST);
+	printf("  " C_CYN "scan" C_RST "          Scan and select a device to connect\n");
+	printf("  " C_CYN "connect" C_RST "       Connect to a device (interactive or by MAC)\n");
+	printf("  " C_CYN "disconnect" C_RST "    Disconnect current device\n");
 	printf("  " C_CYN "status" C_RST "        Show connection and audio status\n");
 	printf("  " C_CYN "diagnose" C_RST "      Run full system diagnostics\n");
 	printf("  " C_CYN "fix" C_RST "           Attempt to fix common audio issues\n");
-	printf("  " C_CYN "reset" C_RST "         Remove AirPods pairing and start fresh\n");
+	printf("  " C_CYN "reset" C_RST "         Remove device pairing and start fresh\n");
 	printf("  " C_CYN "help" C_RST "          Show this help message\n\n");
-	printf(C_BOLD "OPTIONS:" C_RST "\n");
-	printf("  " C_YEL "-m MAC" C_RST "        Specify device MAC address\n");
+	printf(C_BOLD "Options:\n" C_RST);
+	printf("  " C_YEL "-m" C_RST " MAC        Specify device MAC address\n");
 	printf("  " C_YEL "-v" C_RST "            Verbose output\n");
-	printf("  " C_YEL "-t SEC" C_RST "        Scan duration in seconds (default: 10)\n\n");
-	printf(C_BOLD "EXAMPLES:" C_RST "\n");
-	printf("  blueconnect scan\n");
-	printf("  blueconnect connect\n");
-	printf("  blueconnect connect -m AA:BB:CC:DD:EE:FF\n");
-	printf("  blueconnect diagnose\n\n");
-}
-
-int	is_airpods_name(const char *name)
-{
-	if (!name)
-		return (0);
-	if (strcasestr(name, "airpods"))
-		return (1);
-	if (strcasestr(name, "AirPods"))
-		return (1);
-	return (0);
+	printf("  " C_YEL "-t" C_RST " SEC        Scan duration in seconds (default: 10)\n\n");
+	printf(C_BOLD "Examples:\n" C_RST);
+	printf("  kuulobt scan\n");
+	printf("  kuulobt connect\n");
+	printf("  kuulobt connect -m AA:BB:CC:DD:EE:FF\n");
+	printf("  kuulobt diagnose\n\n");
 }
 
 void	mac_to_path(const char *mac, char *path)

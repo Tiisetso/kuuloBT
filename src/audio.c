@@ -3,7 +3,7 @@
 /*   PulseAudio integration for Bluetooth audio routing                       */
 /* ************************************************************************** */
 
-#include "blueconnect.h"
+#include "kuulobt.h"
 
 /* ── PulseAudio callbacks ───────────────────────────────────────────────── */
 
@@ -115,7 +115,7 @@ int	pa_setup(t_app *app)
 	if (!app->pa.ml)
 		return (-1);
 	app->pa.api = pa_mainloop_get_api(app->pa.ml);
-	app->pa.ctx = pa_context_new(app->pa.api, "blueconnect");
+	app->pa.ctx = pa_context_new(app->pa.api, "kuulobt");
 	if (!app->pa.ctx)
 	{
 		pa_mainloop_free(app->pa.ml);

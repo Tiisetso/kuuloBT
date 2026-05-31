@@ -3,7 +3,7 @@
 /*   BlueZ D-Bus interface for Bluetooth management                           */
 /* ************************************************************************** */
 
-#include "blueconnect.h"
+#include "kuulobt.h"
 
 int	bt_init(t_app *app)
 {
@@ -172,8 +172,19 @@ int	bt_get_device_info(t_app *app, t_bt_device *dev)
 	dev->paired = bt_get_bool_prop(app, dev->path, "Paired");
 	dev->trusted = bt_get_bool_prop(app, dev->path, "Trusted");
 	dev->connected = bt_get_bool_prop(app, dev->path, "Connected");
-	dev->is_airpods = is_airpods_name(dev->name);
 	return (0);
+}
+
+int	bt_start_discovery(t_app *app)
+{
+	return (bt_call_method(app, "/org/bluez/hci0",
+		"org.bluez.Adapter1", "StartDiscovery"));
+}
+
+int	bt_stop_discovery(t_app *app)
+{
+	return (bt_call_method(app, "/org/bluez/hci0",
+		"org.bluez.Adapter1", "StopDiscovery"));
 }
 
 int	bt_scan(t_app *app, int duration_sec)
@@ -181,11 +192,9 @@ int	bt_scan(t_app *app, int duration_sec)
 	if (duration_sec <= 0)
 		duration_sec = 10;
 	printf("  %s Starting Bluetooth scan (%ds)...\n", SYM_INFO, duration_sec);
-	bt_call_method(app, "/org/bluez/hci0",
-		"org.bluez.Adapter1", "StartDiscovery");
+	bt_start_discovery(app);
 	progress_dots("Scanning", duration_sec);
-	bt_call_method(app, "/org/bluez/hci0",
-		"org.bluez.Adapter1", "StopDiscovery");
+	bt_stop_discovery(app);
 	printf("  %s Scan complete\n", SYM_OK);
 	return (bt_get_devices(app));
 }
